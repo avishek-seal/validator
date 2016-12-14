@@ -6,4 +6,12 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>validator-implementation</artifactId>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>com.validator</groupId>
+  		<artifactId>validator-rules</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

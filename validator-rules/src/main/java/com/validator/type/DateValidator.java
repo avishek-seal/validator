@@ -9,6 +9,6 @@ import com.validator.constant.DatePattern;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface DateValidator {
+public @interface DateValidator{
 	DatePattern pattern() default DatePattern.DATE_HH_MM_SS;
 }
