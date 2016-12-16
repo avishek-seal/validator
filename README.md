@@ -89,7 +89,7 @@ Example:
 :::::::::::::::::::::::::::::::::::::::::::::::::::::: END OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::: START OF HOW TO USE ::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		public static void main(String[] args) {
+			
 			Employee employee = new Employee();
 			employee.setDateOfBirth("1980-7-29");
 			employee.setEmailId("abc90@xyz.com");
@@ -103,5 +103,5 @@ Example:
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-		}
+			
 ::::::::::::::::::::::::::::::::::::::::::::: END OF HOW TO USE ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
