@@ -7,16 +7,17 @@ required validation criteria (Annotaion's optional properities).
 
 Example:
 ::::::::::::::::::::::::::::::::::::::::::::::::::::: START OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::::::::
-import com.validator.constant.ContentType;
-import com.validator.constant.DatePattern;
-import com.validator.constant.PANPattern;
-import com.validator.type.DateValidator;
-import com.validator.type.EmailValidator;
-import com.validator.type.PANValidator;
-import com.validator.type.PhoneNumberValidator;
-import com.validator.type.TextDataValidator;
 
-public class Employee {
+	import com.validator.constant.ContentType;
+	import com.validator.constant.DatePattern;
+	import com.validator.constant.PANPattern;
+	import com.validator.type.DateValidator;
+	import com.validator.type.EmailValidator;
+	import com.validator.type.PANValidator;
+	import com.validator.type.PhoneNumberValidator;
+	import com.validator.type.TextDataValidator;
+
+	public class Employee {
 
 	@TextDataValidator(contentType=ContentType.NUMERIC, minLength = 5, maxLength = 8, fieldName = "Employee Id")
 	private String id;
@@ -88,21 +89,15 @@ public class Employee {
 :::::::::::::::::::::::::::::::::::::::::::::::::::::: END OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::: START OF HOW TO USE ::::::::::::::::::::::::::::::::::::::::::::::::::::::
-package com.validator.test;
-
-import com.validator.impl.ValidatorProvider;
-
-public class Main {
-
 	public static void main(String[] args) {
 		Employee employee = new Employee();
 		
-		employee.setDateOfBirth("1990-7-29");
-		employee.setEmailId("avishek.seal.90@gmail.com");
+		employee.setDateOfBirth("1980-7-29");
+		employee.setEmailId("abc90@xyz.com");
 		employee.setId("78155");
 		employee.setName("Avishek");
-		employee.setPanNumber("DJAPS5337G");
-		employee.setPhoneNumber("8981497646");
+		employee.setPanNumber("EPBMS1234K");
+		employee.setPhoneNumber("9999999999");
 		
 		try {
 			ValidatorProvider.getInstance().validate(employee);
@@ -110,5 +105,4 @@ public class Main {
 			System.out.println(e.getMessage());
 		}
 	}
-}
 ::::::::::::::::::::::::::::::::::::::::::::: END OF HOW TO USE ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
