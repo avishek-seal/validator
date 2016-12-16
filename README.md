@@ -89,20 +89,20 @@ Example:
 :::::::::::::::::::::::::::::::::::::::::::::::::::::: END OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::: START OF HOW TO USE ::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	public static void main(String[] args) {
-		Employee employee = new Employee();
+		public static void main(String[] args) {
+			Employee employee = new Employee();
+
+			employee.setDateOfBirth("1980-7-29");
+			employee.setEmailId("abc90@xyz.com");
+			employee.setId("78155");
+			employee.setName("Avishek");
+			employee.setPanNumber("EPBMS1234K");
+			employee.setPhoneNumber("9999999999");
 		
-		employee.setDateOfBirth("1980-7-29");
-		employee.setEmailId("abc90@xyz.com");
-		employee.setId("78155");
-		employee.setName("Avishek");
-		employee.setPanNumber("EPBMS1234K");
-		employee.setPhoneNumber("9999999999");
-		
-		try {
-			ValidatorProvider.getInstance().validate(employee);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			try {
+				ValidatorProvider.getInstance().validate(employee);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
-	}
 ::::::::::::::::::::::::::::::::::::::::::::: END OF HOW TO USE ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
