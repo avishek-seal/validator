@@ -89,7 +89,7 @@ Example:
 :::::::::::::::::::::::::::::::::::::::::::::::::::::: END OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::: START OF HOW TO USE ::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		public static void main(String[] args) {
+			public static void main(String[] args) {
 			Employee employee = new Employee();
 
 			employee.setDateOfBirth("1980-7-29");
@@ -98,11 +98,11 @@ Example:
 			employee.setName("Avishek");
 			employee.setPanNumber("EPBMS1234K");
 			employee.setPhoneNumber("9999999999");
-		
+
 			try {
 				ValidatorProvider.getInstance().validate(employee);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-		}
+			}
 ::::::::::::::::::::::::::::::::::::::::::::: END OF HOW TO USE ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
