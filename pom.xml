@@ -17,4 +17,12 @@
 		<module>validator-rules</module>
 		<module>validator-implementation</module>
 	</modules>
+	<name>Validator</name>
+	<organization>
+		<name>Avishek Seal</name>
+	</organization>
+	<scm>
+		<developerConnection>Avishek Seal</developerConnection>
+		<connection>seal.avishek@yahoo.com</connection>
+	</scm>
 </project>
