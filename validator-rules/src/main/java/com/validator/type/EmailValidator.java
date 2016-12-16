@@ -11,4 +11,5 @@ import com.validator.constant.EmailPattern;
 @Target(ElementType.FIELD)
 public @interface EmailValidator{
 	EmailPattern pattern() default EmailPattern.COMMON_PATTERN;
+	String fieldName();
 }

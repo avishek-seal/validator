@@ -11,4 +11,5 @@ import com.validator.constant.PANPattern;
 @Target(ElementType.FIELD)
 public @interface PANValidator {
 	PANPattern pattern() default PANPattern.INDIAN;
+	String fieldName();
 }

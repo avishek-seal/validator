@@ -12,5 +12,7 @@ import com.validator.constant.ContentType;
 @Target(ElementType.FIELD)
 public @interface TextDataValidator {
 	int length() default 256;
+	boolean lengthCheck() default true;
 	ContentType contentType() default ContentType.ALL;
+	String fieldName();
 }

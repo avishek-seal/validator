@@ -12,4 +12,5 @@ import com.validator.constant.PassportPattern;
 public @interface PassportValidator {
 
 	PassportPattern pattern() default PassportPattern.INDIAN;
+	String fieldName();
 }

@@ -11,4 +11,5 @@ import com.validator.constant.DatePattern;
 @Target(ElementType.FIELD)
 public @interface DateValidator{
 	DatePattern pattern() default DatePattern.DATE_HH_MM_SS;
+	String fieldName();
 }

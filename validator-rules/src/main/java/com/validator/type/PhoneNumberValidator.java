@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface PhoneNumberValidator {
 	boolean countryCode() default false;
 	int length() default 10;
+	String fieldName();
 }

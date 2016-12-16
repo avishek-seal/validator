@@ -4,7 +4,7 @@ public class InvalidEmailException extends Exception{
 	
 	private static final long serialVersionUID = 365473552099408849L;
 
-	public InvalidEmailException() {
-		super("Not a valid email id");
+	public InvalidEmailException(String field) {
+		super("Invalid " + field.trim());
 	}
 }

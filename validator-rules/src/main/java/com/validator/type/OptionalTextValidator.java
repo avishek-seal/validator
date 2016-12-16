@@ -13,4 +13,5 @@ public @interface OptionalTextValidator {
 
 	int length() default 256;
 	ContentType contentType() default ContentType.ALL;
+	String fieldName();
 }
