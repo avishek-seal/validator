@@ -1,5 +1,11 @@
 package com.validator.spec;
 
+/**
+ * this Interface defines the protocol need to implement for validation
+ * 
+ * @author Avishek Seal
+ * @since Dec 16, 2016
+ */
 @FunctionalInterface
 public interface ObjectValidator {
 

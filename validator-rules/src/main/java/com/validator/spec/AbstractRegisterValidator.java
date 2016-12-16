@@ -26,22 +26,42 @@ import com.validator.type.PhoneNumberValidator;
 import com.validator.type.PincodeValidator;
 import com.validator.type.TextDataValidator;
 
+/**
+ * this abstract class holds all the functionality need to implement the specification of
+ * the validation
+ * 
+ * @author Avishek Seal
+ * @since Dec 16, 2016
+ */
 public abstract class AbstractRegisterValidator {
 	
 	@SuppressWarnings("rawtypes")
 	private static final Map<Class, ValidationLogic> VALIDATORS = new HashMap<>();
 	
-	
+	/**
+	 * this method is used to register the validator
+	 * with its functionality
+	 * 
+	 * @param clazz
+	 * @param validationLogic
+	 */
 	protected static <T> void register(Class<T> clazz, ValidationLogic validationLogic) {
 		VALIDATORS.put(clazz, validationLogic);
 	}
 	
+	/**
+	 * this method is used to get the functionality for a given
+	 * validator
+	 * 
+	 * @param clazz
+	 * @return
+	 */
 	public static <T> ValidationLogic getValidators(Class<T> clazz) {
 		return VALIDATORS.get(clazz);
 	}
 
 
-
+	//Register any new validator that you declare under {com.validator.type} package
 	static{
 		//Registering Date validation logic
 		register(DateValidator.class, (annotation, object) -> {
@@ -85,7 +105,7 @@ public abstract class AbstractRegisterValidator {
 			
 			final OptionalTextValidator optionalTextValidator = OptionalTextValidator.class.cast(annotation);
 			
-			lengthCheck(data, optionalTextValidator.length(), optionalTextValidator.fieldName());
+			lengthCheck(data, optionalTextValidator.minLength(), optionalTextValidator.maxLength(), optionalTextValidator.fieldName());
 			
 			contentTypeCheck(data, optionalTextValidator.contentType(), optionalTextValidator.fieldName());
 		});
@@ -115,7 +135,7 @@ public abstract class AbstractRegisterValidator {
 			
 			nullCheck(data, numberValidator.fieldName());
 			
-			lengthCheck(data, numberValidator.length(), numberValidator.fieldName());
+			lengthCheck(data, numberValidator.length(), numberValidator.length(),numberValidator.fieldName());
 		});
 		
 		
@@ -134,39 +154,44 @@ public abstract class AbstractRegisterValidator {
 			nullCheck(data, dataValidator.fieldName());
 			
 			if(dataValidator.lengthCheck()) {
-				lengthCheck(data, dataValidator.length(), dataValidator.fieldName());	
+				lengthCheck(data, dataValidator.minLength(), dataValidator.maxLength(), dataValidator.fieldName());	
 			}
 			
 			contentTypeCheck(data, dataValidator.contentType(), dataValidator.fieldName());
 		});
 	}
 	
+	//this method is used to validate null
 	private static final void nullCheck(String data, String field) throws NullReferenceFoundException {
 		if(Objects.isNull(data)){
 			throw new NullReferenceFoundException(field);
 		}
 	}
 	
-	private static final void lengthCheck(String data, int length, String field) throws InvalidTextLengthException {
-		if(length > 0){
-			if(length > data.length()){
-				throw new InvalidTextLengthException(length, data.length(), field);
+	//this method is used to validate length
+	private static final void lengthCheck(String data, int min, int max, String field) throws InvalidTextLengthException {
+		if(max > 0 && min >= 0 && max >= min){
+			if(!(max >= data.length() && data.length() >= min)){
+				throw new InvalidTextLengthException(max, min, data.length(), field);
 			}
 		}
 	}
 	
+	//this method is used to validate the content type of a string
 	private static void contentTypeCheck(String data, ContentType contentType, String field) throws InvalidTextFormatException {
 		if(!data.matches(contentType.getValue())) {
 			throw new InvalidTextFormatException(field);
 		}
 	}
 	
+	//this method is used to validate the content type of a string
 	private static void contentTypeCheck(String data, String pattern, String field) throws InvalidTextFormatException {
 		if(!data.matches(pattern)) {
 			throw new InvalidTextFormatException(field);
 		}
 	}
 	
+	//this method is used to validate the email id
 	private static final void emailCheck(String data, EmailPattern pattern, String field) throws InvalidEmailException {
 		if(!data.matches(pattern.getValue())){
 			throw new InvalidEmailException(field);
@@ -185,6 +210,7 @@ public abstract class AbstractRegisterValidator {
 		}
 	}
 	
+	//this method is used to validate the object
 	protected static final <T> void modelValidate(T t) throws Exception{
 		@SuppressWarnings("unchecked")
 		final Class<T> modelClass = (Class<T>) t.getClass();
