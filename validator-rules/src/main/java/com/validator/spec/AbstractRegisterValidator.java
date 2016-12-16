@@ -2,7 +2,6 @@ package com.validator.spec;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +10,7 @@ import java.util.Objects;
 import com.validator.constant.ContentType;
 import com.validator.constant.DatePattern;
 import com.validator.constant.EmailPattern;
+import com.validator.exception.InvalidDateException;
 import com.validator.exception.InvalidEmailException;
 import com.validator.exception.InvalidTextFormatException;
 import com.validator.exception.InvalidTextLengthException;
@@ -47,11 +47,11 @@ public abstract class AbstractRegisterValidator {
 		register(DateValidator.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			nullCheck(data);
-			
 			final DateValidator dateValidator = DateValidator.class.cast(annotation);
 			
-			dateCheck(data, dateValidator.pattern());
+			nullCheck(data, dateValidator.fieldName());
+			
+			dateCheck(data, dateValidator.pattern(), dateValidator.fieldName());
 		});
 		
 		
@@ -59,11 +59,11 @@ public abstract class AbstractRegisterValidator {
 		register(EmailValidator.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			nullCheck(data);
-			
 			final EmailValidator emailValidator = EmailValidator.class.cast(annotation);
 			
-			emailCheck(data, emailValidator.pattern());
+			nullCheck(data, emailValidator.fieldName());
+			
+			emailCheck(data, emailValidator.pattern(), emailValidator.fieldName());
 		});
 		
 		
@@ -75,7 +75,7 @@ public abstract class AbstractRegisterValidator {
 		
 		//Registering Not Null validation logic
 		register(NotNullValidator.class, (annotation, object) -> {
-			nullCheck(object.toString());
+			nullCheck(object.toString(), NotNullValidator.class.cast(annotation).fieldName());
 		});
 		
 		
@@ -85,15 +85,19 @@ public abstract class AbstractRegisterValidator {
 			
 			final OptionalTextValidator optionalTextValidator = OptionalTextValidator.class.cast(annotation);
 			
-			lengthCheck(data, optionalTextValidator.length());
+			lengthCheck(data, optionalTextValidator.length(), optionalTextValidator.fieldName());
 			
-			contentTypeCheck(data, optionalTextValidator.contentType());
+			contentTypeCheck(data, optionalTextValidator.contentType(), optionalTextValidator.fieldName());
 		});
 		
 		
 		//Registering PAN Number validation logic
 		register(PANValidator.class, (annotation, object) -> {
+			final String data = object.toString();
 			
+			final PANValidator panValidator = PANValidator.class.cast(annotation);
+			
+			contentTypeCheck(data, panValidator.pattern().getValue(), panValidator.fieldName());
 		});
 		
 		
@@ -107,11 +111,11 @@ public abstract class AbstractRegisterValidator {
 		register(PhoneNumberValidator.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			nullCheck(data);
-			
 			final PhoneNumberValidator numberValidator = PhoneNumberValidator.class.cast(annotation);
 			
-			lengthCheck(data, numberValidator.length());
+			nullCheck(data, numberValidator.fieldName());
+			
+			lengthCheck(data, numberValidator.length(), numberValidator.fieldName());
 		});
 		
 		
@@ -125,47 +129,60 @@ public abstract class AbstractRegisterValidator {
 		register(TextDataValidator.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			nullCheck(data);
-			
 			final TextDataValidator dataValidator = TextDataValidator.class.cast(annotation);
 			
-			lengthCheck(data, dataValidator.length());
+			nullCheck(data, dataValidator.fieldName());
 			
-			contentTypeCheck(data, dataValidator.contentType());
+			if(dataValidator.lengthCheck()) {
+				lengthCheck(data, dataValidator.length(), dataValidator.fieldName());	
+			}
+			
+			contentTypeCheck(data, dataValidator.contentType(), dataValidator.fieldName());
 		});
 	}
 	
-	private static final void nullCheck(String data) throws NullReferenceFoundException {
+	private static final void nullCheck(String data, String field) throws NullReferenceFoundException {
 		if(Objects.isNull(data)){
-			throw new NullReferenceFoundException();
+			throw new NullReferenceFoundException(field);
 		}
 	}
 	
-	private static final void lengthCheck(String data, int length) throws InvalidTextLengthException {
+	private static final void lengthCheck(String data, int length, String field) throws InvalidTextLengthException {
 		if(length > 0){
-			if(length < data.length()){
-				throw new InvalidTextLengthException(length, data.length());
+			if(length > data.length()){
+				throw new InvalidTextLengthException(length, data.length(), field);
 			}
 		}
 	}
 	
-	private static final void contentTypeCheck(String data, ContentType contentType) throws InvalidTextFormatException {
+	private static void contentTypeCheck(String data, ContentType contentType, String field) throws InvalidTextFormatException {
 		if(!data.matches(contentType.getValue())) {
-			throw new InvalidTextFormatException();
+			throw new InvalidTextFormatException(field);
 		}
 	}
 	
-	private static final void emailCheck(String data, EmailPattern pattern) throws InvalidEmailException {
+	private static void contentTypeCheck(String data, String pattern, String field) throws InvalidTextFormatException {
+		if(!data.matches(pattern)) {
+			throw new InvalidTextFormatException(field);
+		}
+	}
+	
+	private static final void emailCheck(String data, EmailPattern pattern, String field) throws InvalidEmailException {
 		if(!data.matches(pattern.getValue())){
-			throw new InvalidEmailException();
+			throw new InvalidEmailException(field);
 		}
 	}
 	
 	//this method is used to check whether date pattern is valid or not
-	private static final void dateCheck(String data, DatePattern pattern) throws ParseException {
+	private static final void dateCheck(String data, DatePattern pattern, String field) throws Exception {
 		final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 		DATE_FORMAT.applyPattern(pattern.getValue());
-		DATE_FORMAT.parse(data);
+		
+		try{
+			DATE_FORMAT.parse(data);
+		} catch (Exception e) {
+			throw new InvalidDateException(field);
+		}
 	}
 	
 	protected static final <T> void modelValidate(T t) throws Exception{
@@ -177,10 +194,10 @@ public abstract class AbstractRegisterValidator {
 		if(fields != null && fields.length > 0) {
 			for (Field field : fields) {
 				final Annotation[] annotations = field.getAnnotations();
-				
+				field.setAccessible(true);
 				if(annotations != null && annotations.length > 0) {
 					for(Annotation annotation : annotations) {
-						getValidators(annotation.getClass()).logic(annotation, field.get(t));
+						getValidators(annotation.annotationType()).logic(annotation, field.get(t));
 					}
 				}
 			}
