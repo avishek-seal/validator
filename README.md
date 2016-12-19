@@ -36,6 +36,9 @@ Example:
 	
 	@PhoneNumber(countryCode = false, length = 10, fieldName = "Professional Mobile Number")
 	private String phoneNumber;
+	
+	@Collection(fieldName = "Choices", uniqueValue = true, minElements = 3, maxElements = 10)
+	private int[] choices;
 
 	public String getId() {
 		return id;
@@ -84,6 +87,14 @@ Example:
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
+	public int[] getChoices() {
+		return choices;
+	}
+
+	public void setChoices(int[] choices) {
+		this.choices = choices;
+	}
 }
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::: END OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::
@@ -97,6 +108,7 @@ Example:
 			employee.setName("Avishek");
 			employee.setPanNumber("EPBMS1234K");
 			employee.setPhoneNumber("9999999999");
+			employee.setChoices(new int[]{1, 2, 3});
 
 			try {
 				ValidatorProvider.getInstance().validate(employee);
