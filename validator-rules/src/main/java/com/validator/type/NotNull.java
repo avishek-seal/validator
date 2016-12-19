@@ -6,13 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * this validator is used to validate the pin number
+ * this validator is used to check whether a property is null or not
+ * 
  * @author Avishek Seal
  * @since Dec 16, 2016
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface PincodeValidator {
+public @interface NotNull {
 	
 	/**
 	 * this option is used to set the visible field name of the property

@@ -16,7 +16,7 @@ import com.validator.constant.DatePattern;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface DateValidator{
+public @interface Date{
 	
 	/**
 	 * this option is used to set the date/date time pettern

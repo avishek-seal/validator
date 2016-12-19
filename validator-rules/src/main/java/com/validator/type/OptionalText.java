@@ -9,7 +9,7 @@ import com.validator.constant.ContentType;
 
 /**
  * this validator is used to validate if a property is holding
- * text value and no null, then that text value matches the
+ * any text value then that text value matches the
  * provided length barier and content type
  * 
  * @author Avishek Seal
@@ -17,27 +17,22 @@ import com.validator.constant.ContentType;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface TextDataValidator {
-	
+public @interface OptionalText {
+
 	/**
-	 * this option is used to set min length of a text data
+	 * this option is used to set the min length of the text
 	 * @return
 	 */
 	int minLength() default 0;
 	
 	/**
-	 * this option is used to set max length of a text data
+	 * this option is used to set max length of the text
 	 * @return
 	 */
 	int maxLength() default 256;
-	/**
-	 * this option is used to set whether length check is needed or not
-	 * @return
-	 */
-	boolean lengthCheck() default true;
 	
 	/**
-	 * this option is used to set content type of the text data
+	 * this option is used to set the content type of the text
 	 * @return
 	 */
 	ContentType contentType() default ContentType.ALL;

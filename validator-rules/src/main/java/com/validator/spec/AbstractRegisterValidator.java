@@ -15,16 +15,16 @@ import com.validator.exception.InvalidEmailException;
 import com.validator.exception.InvalidTextFormatException;
 import com.validator.exception.InvalidTextLengthException;
 import com.validator.exception.NullReferenceFoundException;
-import com.validator.type.DateValidator;
-import com.validator.type.EmailValidator;
-import com.validator.type.ModelValidator;
-import com.validator.type.NotNullValidator;
-import com.validator.type.OptionalTextValidator;
-import com.validator.type.PANValidator;
-import com.validator.type.PassportValidator;
-import com.validator.type.PhoneNumberValidator;
-import com.validator.type.PincodeValidator;
-import com.validator.type.TextDataValidator;
+import com.validator.type.Date;
+import com.validator.type.Email;
+import com.validator.type.Model;
+import com.validator.type.NotNull;
+import com.validator.type.OptionalText;
+import com.validator.type.PAN;
+import com.validator.type.Passport;
+import com.validator.type.PhoneNumber;
+import com.validator.type.Pincode;
+import com.validator.type.TextData;
 
 /**
  * this abstract class holds all the functionality need to implement the specification of
@@ -64,10 +64,10 @@ public abstract class AbstractRegisterValidator {
 	//Register any new validator that you declare under {com.validator.type} package
 	static{
 		//Registering Date validation logic
-		register(DateValidator.class, (annotation, object) -> {
+		register(Date.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			final DateValidator dateValidator = DateValidator.class.cast(annotation);
+			final Date dateValidator = Date.class.cast(annotation);
 			
 			nullCheck(data, dateValidator.fieldName());
 			
@@ -76,10 +76,10 @@ public abstract class AbstractRegisterValidator {
 		
 		
 		//Registering Email validation logic
-		register(EmailValidator.class, (annotation, object) -> {
+		register(Email.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			final EmailValidator emailValidator = EmailValidator.class.cast(annotation);
+			final Email emailValidator = Email.class.cast(annotation);
 			
 			nullCheck(data, emailValidator.fieldName());
 			
@@ -88,22 +88,22 @@ public abstract class AbstractRegisterValidator {
 		
 		
 		//Registering Model validation logic
-		register(ModelValidator.class, (annotation, object) -> {
+		register(Model.class, (annotation, object) -> {
 			modelValidate(object);
 		});
 		
 		
 		//Registering Not Null validation logic
-		register(NotNullValidator.class, (annotation, object) -> {
-			nullCheck(object.toString(), NotNullValidator.class.cast(annotation).fieldName());
+		register(NotNull.class, (annotation, object) -> {
+			nullCheck(object.toString(), NotNull.class.cast(annotation).fieldName());
 		});
 		
 		
 		//Registering Optional Text validation logic
-		register(OptionalTextValidator.class, (annotation, object) -> {
+		register(OptionalText.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			final OptionalTextValidator optionalTextValidator = OptionalTextValidator.class.cast(annotation);
+			final OptionalText optionalTextValidator = OptionalText.class.cast(annotation);
 			
 			lengthCheck(data, optionalTextValidator.minLength(), optionalTextValidator.maxLength(), optionalTextValidator.fieldName());
 			
@@ -112,26 +112,26 @@ public abstract class AbstractRegisterValidator {
 		
 		
 		//Registering PAN Number validation logic
-		register(PANValidator.class, (annotation, object) -> {
+		register(PAN.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			final PANValidator panValidator = PANValidator.class.cast(annotation);
+			final PAN panValidator = PAN.class.cast(annotation);
 			
 			contentTypeCheck(data, panValidator.pattern().getValue(), panValidator.fieldName());
 		});
 		
 		
 		//Registering Passport validation logic
-		register(PassportValidator.class, (annotation, object) -> {
+		register(Passport.class, (annotation, object) -> {
 			
 		});
 		
 		
 		//Registering Phone number validation logic
-		register(PhoneNumberValidator.class, (annotation, object) -> {
+		register(PhoneNumber.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			final PhoneNumberValidator numberValidator = PhoneNumberValidator.class.cast(annotation);
+			final PhoneNumber numberValidator = PhoneNumber.class.cast(annotation);
 			
 			nullCheck(data, numberValidator.fieldName());
 			
@@ -140,16 +140,16 @@ public abstract class AbstractRegisterValidator {
 		
 		
 		//Registering Pincode validation logic
-		register(PincodeValidator.class, (annotation, object) -> {
+		register(Pincode.class, (annotation, object) -> {
 			
 		});
 		
 		
 		//Registering TEXT data validation logic
-		register(TextDataValidator.class, (annotation, object) -> {
+		register(TextData.class, (annotation, object) -> {
 			final String data = object.toString();
 			
-			final TextDataValidator dataValidator = TextDataValidator.class.cast(annotation);
+			final TextData dataValidator = TextData.class.cast(annotation);
 			
 			nullCheck(data, dataValidator.fieldName());
 			

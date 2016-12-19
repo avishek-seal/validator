@@ -5,30 +5,24 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.validator.constant.PassportPattern;
+
 /**
- * this validator is used to validate phone number
- * provided is country code is available in the text or not
- * and length of the mobile number
+ * this validator is used to validate the passport
+ * provided the Country wise pattern
  * 
  * @author Avishek Seal
  * @since Dec 16, 2016
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface PhoneNumberValidator {
-	
+public @interface Passport {
+
 	/**
-	 * this options is used to set whether
-	 * country code will be available in phone number or not
+	 * this option is used to set country specific passport pattern
 	 * @return
 	 */
-	boolean countryCode() default false;
-	
-	/**
-	 * this option is used to set the length of the phone number must be
-	 * @return
-	 */
-	int length() default 10;
+	PassportPattern pattern() default PassportPattern.INDIAN;
 	
 	/**
 	 * this option is used to set the visible field name of the property

@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface ModelValidator {
+public @interface Model {
 	/**
 	 * this option is used to set whether the association is collection or not
 	 * @return
