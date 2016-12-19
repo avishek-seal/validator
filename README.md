@@ -19,22 +19,22 @@ Example:
 
 	public class Employee {
 
-	@TextDataValidator(contentType=ContentType.NUMERIC, minLength = 5, maxLength = 8, fieldName = "Employee Id")
-	private String id;
+	@TextData(contentType=ContentType.NUMERIC, minLength = 5, maxLength = 8, fieldName = "Employee Id")
+	private int id;
 	
-	@TextDataValidator(contentType = ContentType.ONLY_ALPHABETS, lengthCheck = false, fieldName = "Name")
+	@TextData(contentType = ContentType.ONLY_ALPHABETS, lengthCheck = false, fieldName = "Name")
 	private String name;
 	
-	@DateValidator(pattern = DatePattern.DATE, fieldName = "Date of Birth")
-	private String dateOfBirth;
+	@com.validator.type.Date(pattern = DatePattern.DATE, fieldName = "Date of Birth")
+	private Date dateOfBirth;
 	
-	@PANValidator(pattern = PANPattern.INDIAN, fieldName = "PAN")
+	@PAN(pattern = PANPattern.INDIAN, fieldName = "PAN")
 	private String panNumber;
 	
-	@EmailValidator(fieldName = "Professional Email Id")
+	@Email(fieldName = "Professional Email Id")
 	private String emailId;
 	
-	@PhoneNumberValidator(countryCode = false, length = 10, fieldName = "Professional Mobile Number")
+	@PhoneNumber(countryCode = false, length = 10, fieldName = "Professional Mobile Number")
 	private String phoneNumber;
 
 	public String getId() {
