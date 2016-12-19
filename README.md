@@ -39,6 +39,9 @@ Example:
 	
 	@Collection(fieldName = "Choices", uniqueValue = true, minElements = 3, maxElements = 10)
 	private int[] choices;
+	
+	@Model(many = true)
+	private List<Role> roles;
 
 	public String getId() {
 		return id;
@@ -95,6 +98,14 @@ Example:
 	public void setChoices(int[] choices) {
 		this.choices = choices;
 	}
+	
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 }
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::: END OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::
@@ -109,7 +120,16 @@ Example:
 			employee.setPanNumber("EPBMS1234K");
 			employee.setPhoneNumber("9999999999");
 			employee.setChoices(new int[]{1, 2, 3});
+			employee.setRoles(new ArrayList<Role>(){
 
+				private static final long serialVersionUID = -3476041215461987786L;
+	
+				{
+					add(new Role(1, "a"));
+					add(new Role(1, null));
+				}
+			});
+			
 			try {
 				ValidatorProvider.getInstance().validate(employee);
 			} catch (Exception e) {
