@@ -1,6 +1,7 @@
 package com.validator.spec;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -10,11 +11,15 @@ import java.util.Objects;
 import com.validator.constant.ContentType;
 import com.validator.constant.DatePattern;
 import com.validator.constant.EmailPattern;
+import com.validator.exception.DuplicateValueException;
+import com.validator.exception.InvalidArraySize;
 import com.validator.exception.InvalidDateException;
 import com.validator.exception.InvalidEmailException;
 import com.validator.exception.InvalidTextFormatException;
 import com.validator.exception.InvalidTextLengthException;
+import com.validator.exception.NotAnArrayException;
 import com.validator.exception.NullReferenceFoundException;
+import com.validator.type.Collection;
 import com.validator.type.Date;
 import com.validator.type.Email;
 import com.validator.type.Model;
@@ -159,10 +164,38 @@ public abstract class AbstractRegisterValidator {
 			
 			contentTypeCheck(data, dataValidator.contentType(), dataValidator.fieldName());
 		});
+		
+		register(Collection.class, (annotation, object) -> {
+			final Collection collection = Collection.class.cast(annotation);
+			
+			nullCheck(object, collection.fieldName());
+			
+			if(object.getClass().isArray()) {
+				final int length = Array.getLength(object);
+				
+				if(!(length <= collection.maxElements() && length >= collection.minElements())) {
+					throw new InvalidArraySize(length, collection.maxElements(), collection.minElements(), collection.fieldName());
+				}
+				
+				if(collection.uniqueValue()) {
+					for(int index = 0; index < length; index++) {
+						 for(int nextIndex = index + 1; nextIndex < length; nextIndex++) {
+							 if(Array.get(object, index).equals(Array.get(object, nextIndex))) {
+								 throw new DuplicateValueException(collection.fieldName(), Array.get(object, index).toString());
+							 }
+						 }
+					 }
+					
+				}
+				
+			} else {
+				throw new NotAnArrayException(collection.fieldName());
+			}
+		});
 	}
 	
 	//this method is used to validate null
-	private static final void nullCheck(String data, String field) throws NullReferenceFoundException {
+	private static final void nullCheck(Object data, String field) throws NullReferenceFoundException {
 		if(Objects.isNull(data)){
 			throw new NullReferenceFoundException(field);
 		}
@@ -204,6 +237,7 @@ public abstract class AbstractRegisterValidator {
 		DATE_FORMAT.applyPattern(pattern.getValue());
 		
 		try{
+			System.out.println(data);
 			DATE_FORMAT.parse(data);
 		} catch (Exception e) {
 			throw new InvalidDateException(field);
