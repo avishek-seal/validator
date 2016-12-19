@@ -94,13 +94,25 @@ public abstract class AbstractRegisterValidator {
 		
 		//Registering Model validation logic
 		register(Model.class, (annotation, object) -> {
-			modelValidate(object);
+			final Model modelAnnotation = Model.class.cast(annotation);
+			
+			if(modelAnnotation.many()) {
+				@SuppressWarnings("unchecked")
+				java.util.Collection<Object> collection = java.util.Collection.class.cast(object);
+				
+				for(Object o : collection) {
+					modelValidate(o);
+				}
+				
+			} else {
+				modelValidate(object);
+			}
 		});
 		
 		
 		//Registering Not Null validation logic
 		register(NotNull.class, (annotation, object) -> {
-			nullCheck(object.toString(), NotNull.class.cast(annotation).fieldName());
+			nullCheck(object, NotNull.class.cast(annotation).fieldName());
 		});
 		
 		
