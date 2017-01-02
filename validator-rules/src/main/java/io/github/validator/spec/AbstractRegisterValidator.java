@@ -177,6 +177,7 @@ public abstract class AbstractRegisterValidator {
 			contentTypeCheck(data, dataValidator.contentType(), dataValidator.fieldName());
 		});
 		
+		//Registering Collection data validation logic
 		register(Collection.class, (annotation, object) -> {
 			final Collection collection = Collection.class.cast(annotation);
 			
@@ -197,9 +198,7 @@ public abstract class AbstractRegisterValidator {
 							 }
 						 }
 					 }
-					
 				}
-				
 			} else {
 				throw new NotAnArrayException(collection.fieldName());
 			}
@@ -249,7 +248,6 @@ public abstract class AbstractRegisterValidator {
 		DATE_FORMAT.applyPattern(pattern.getValue());
 		
 		try{
-			System.out.println(data);
 			DATE_FORMAT.parse(data);
 		} catch (Exception e) {
 			throw new InvalidDateException(field);
