@@ -5,7 +5,21 @@ required validation criteria (Annotaion's optional properities).
 
 - It is easy to import to your project.
 
-Example:
+- Types of validator it supports:
+	
+	TYPE			OPTIONS  
+  * @Collection		[fieldName - String], [maxElements - int], [minElements - int], [uniqueValue - boolean]
+  * @Date			[fieldName - String], [pattern - io.github.validator.constant.DatePattern]
+  * @Email			[fieldName - String], [pattern - io.github.validator.constant.EmailPattern]
+  * @Model			[many - boolean]
+  * @NotNull		[fieldName - String]
+  * @OptionalText	[fieldName - String], [contentType - io.github.validator.constant.ContentType], [maxLength - int], [minLength - int]
+  * @PAN			[fieldName - String], [pattern - io.github.validator.constant.PANPattern]
+  * @Passport		[fieldName - String], [pattern - io.github.validator.constant.PassportPattern]
+  * @PhoneNumber	[fieldName - String], [countryCode - boolean], [length - int]
+  * @Pincode		[fieldName - String]
+  * @TextData		[fieldName - String], [contentType - io.github.validator.constant.ContentType], [lengthCheck - boolean], [maxLength - int], [minLength - int]
+  Example:
 ::::::::::::::::::::::::::::::::::::::::::::::::::::: START OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	import io.github.validator.constant.ContentType;
