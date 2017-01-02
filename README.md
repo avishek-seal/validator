@@ -26,7 +26,7 @@ Example:
 	@TextData(contentType = ContentType.ONLY_ALPHABETS, lengthCheck = false, fieldName = "Name")
 	private String name;
 	
-	@com.validator.type.Date(pattern = DatePattern.DATE, fieldName = "Date of Birth")
+	@io.github.validator.type.Date(pattern = DatePattern.DATE, fieldName = "Date of Birth")
 	private Date dateOfBirth;
 	
 	@PAN(pattern = PANPattern.INDIAN, fieldName = "PAN")
