@@ -8,14 +8,15 @@ required validation criteria (Annotaion's optional properities).
 Example:
 ::::::::::::::::::::::::::::::::::::::::::::::::::::: START OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-	import com.validator.constant.ContentType;
-	import com.validator.constant.DatePattern;
-	import com.validator.constant.PANPattern;
-	import com.validator.type.DateValidator;
-	import com.validator.type.EmailValidator;
-	import com.validator.type.PANValidator;
-	import com.validator.type.PhoneNumberValidator;
-	import com.validator.type.TextDataValidator;
+	import io.github.validator.constant.ContentType;
+	import io.github.validator.constant.DatePattern;
+	import io.github.validator.constant.PANPattern;
+	import io.github.validator.type.Collection;
+	import io.github.validator.type.Email;
+	import io.github.validator.type.Model;
+	import io.github.validator.type.PAN;
+	import io.github.validator.type.PhoneNumber;
+	import io.github.validator.type.TextData;
 
 	public class Employee {
 
