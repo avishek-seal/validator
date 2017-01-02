@@ -19,9 +19,8 @@ required validation criteria (Annotaion's optional properities).
   * @PhoneNumber	[fieldName - String], [countryCode - boolean], [length - int]
   * @Pincode		[fieldName - String]
   * @TextData		[fieldName - String], [contentType - io.github.validator.constant.ContentType], [lengthCheck - boolean], [maxLength - int], [minLength - int]
-  E
   
-  Example:
+Example:
 ::::::::::::::::::::::::::::::::::::::::::::::::::::: START OF POJO CLASS :::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	import io.github.validator.constant.ContentType;
